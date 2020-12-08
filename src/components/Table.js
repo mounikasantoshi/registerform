@@ -5,9 +5,9 @@ const Table = (props) => {
     props.delete(e.target.id);
   };
 
-  const onUpdate = (e) => {
-    props.update(e.target.id);
-  };
+  // const onUpdate = (e) => {
+  //   props.update(e.target.id);
+  // };
 
   return (
     <div className="container">
@@ -35,8 +35,8 @@ const Table = (props) => {
               <td>{v.age}</td>
               <td>{v.gender}</td>
               <td>
-                <button id={i} onClick={onUpdate} className="btn btn-danger">
-                  Update
+                <button id={i} onClick={props.edit} className="btn btn-danger">
+                  Edit
                 </button>
               </td>
               <td>

@@ -1,56 +1,22 @@
 import React, { Component } from "react";
 
 export class Form extends Component {
-  state = {
-    data: { firstname: "", lastname: "", age: "", gender: "" },
-  };
-
-  firstname = (e) => {
-    this.setState({ data: { ...this.state.data, firstname: e.target.value } });
-  };
-
-  lastname = (e) => {
-    this.setState({
-      data: { ...this.state.data, lastname: e.target.value },
-    });
-  };
-
-  age = (e) => {
-    this.setState({ data: { ...this.state.data, age: e.target.value } });
-  };
-
-  gender = (e) => {
-    this.setState({ data: { ...this.state.data, gender: e.target.value } });
-  };
-
-  click = (e) => {
-    e.preventDefault();
-    if (
-      this.state.data.firstname != "" &&
-      this.state.data.lastname != "" &&
-      this.state.data.age != "" &&
-      this.state.data.gender != ""
-    ) {
-      this.props.click(this.state.data);
-
-      this.setState({
-        data: { firstname: "", lastname: "", age: "", gender: "" },
-      });
-    }
-  };
   render() {
     return (
       <div className="container gap">
-        <form onSubmit={this.click}>
+        <form onSubmit={this.props.click}>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">First name</label>
             <div class="col-sm-10">
               <input
-                onChange={this.firstname}
+                onChange={this.props.firstname}
                 type="text"
-                value={this.state.data.firstname}
+                value={this.props.data.firstname}
                 class="form-control"
               />
+              <p className="error">
+                {this.props.errors.firstname ? "*please enter the field" : ""}
+              </p>
             </div>
           </div>
 
@@ -58,11 +24,14 @@ export class Form extends Component {
             <label class="col-sm-2 col-form-label">Lastname</label>
             <div class="col-sm-10">
               <input
-                onChange={this.lastname}
-                value={this.state.data.lastname}
+                onChange={this.props.lastname}
+                value={this.props.data.lastname}
                 type="text"
                 class="form-control"
               />
+              <p className="error">
+                {this.props.errors.lastname ? "*please enter the field" : ""}
+              </p>
             </div>
           </div>
 
@@ -70,11 +39,14 @@ export class Form extends Component {
             <label class="col-sm-2 col-form-label">age</label>
             <div class="col-sm-10">
               <input
-                onChange={this.age}
+                onChange={this.props.age}
                 type="number"
-                value={this.state.data.age}
+                value={this.props.data.age}
                 class="form-control"
               />
+              <p className="error">
+                {this.props.errors.age ? "*please enter the field" : ""}
+              </p>
             </div>
           </div>
 
@@ -84,13 +56,13 @@ export class Form extends Component {
               <div class="col-sm-10">
                 <div class="form-check">
                   <input
-                    onChange={this.gender}
+                    onChange={this.props.gender}
                     class="form-check-input"
                     type="radio"
                     name="gridRadios"
                     id="gridRadios1"
                     value="female"
-                    checked={this.state.data.gender == "female"}
+                    checked={this.props.data.gender == "female"}
                   />
                   <label class="form-check-label" for="gridRadios1">
                     female
@@ -99,18 +71,21 @@ export class Form extends Component {
 
                 <div class="form-check">
                   <input
-                    onChange={this.gender}
+                    onChange={this.props.gender}
                     class="form-check-input"
                     type="radio"
                     name="gridRadios"
                     id="gridRadios2"
                     value="male"
-                    checked={this.state.data.gender == "male"}
+                    checked={this.props.data.gender == "male"}
                   />
                   <label class="form-check-label" for="gridRadios2">
                     male
                   </label>
                 </div>
+                <p className="error">
+                  {this.props.errors.gender ? `*can't select the option` : ""}
+                </p>
               </div>
             </div>
           </fieldset>
@@ -118,7 +93,7 @@ export class Form extends Component {
           <div class="form-group row">
             <div class="col-sm-10">
               <button
-                onClick={this.click}
+                onClick={this.props.click}
                 type="submit"
                 class="btn btn-primary"
               >
