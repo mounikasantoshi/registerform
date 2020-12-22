@@ -1,35 +1,60 @@
 import React, { Component } from "react";
 import Form from "./Form";
 import Table from "./Table";
+import axios from "axios";
 
 export class Register extends Component {
   state = {
     //text: [],
-    list: [
-      {
-        firstname: "mounika",
-        lastname: "venkatrao",
-        age: 23,
-        gender: "female",
-      },
-    ],
-    data: { firstname: "", lastname: "", age: "", gender: "" },
+    // list: [
+    //   // {
+    //   //   firstName: "mounika",
+    //   //   lastName: "venkatrao",
+    //   //   age: 23,
+    //   //   gender: "female",
+    //   // },
+    // ],
+    users: [],
+    data: { firstName: "", lastName: "", age: "", gender: "" },
     currentid: "",
 
-    errors: { firstname: "", lastname: "", age: "", gender: "" },
+    errors: { firstName: "", lastName: "", age: "", gender: "" },
+    modalShow: false,
   };
-
-  firstname = (e) => {
-    this.setState({
-      data: { ...this.state.data, firstname: e.target.value },
-      errors: { ...this.state.errors, firstname: false },
+  getusers = () => {
+    axios.get("/persons").then((res) => {
+      this.setState({ users: res.data });
+      // console.log(this.state.users);
     });
   };
 
-  lastname = (e) => {
+  componentDidMount() {
+    this.getusers();
+  }
+
+  close = () => {
+    this.setState({ modalShow: false });
+  };
+
+  open = () => {
+    this.setState({ modalShow: true });
+  };
+
+  addDetails = () => {
+    return { modalShow: false };
+  };
+
+  firstName = (e) => {
     this.setState({
-      data: { ...this.state.data, lastname: e.target.value },
-      errors: { ...this.state.errors, lastname: false },
+      data: { ...this.state.data, firstName: e.target.value },
+      errors: { ...this.state.errors, firstName: false },
+    });
+  };
+
+  lastName = (e) => {
+    this.setState({
+      data: { ...this.state.data, lastName: e.target.value },
+      errors: { ...this.state.errors, lastName: false },
     });
   };
 
@@ -48,38 +73,49 @@ export class Register extends Component {
   };
 
   delete = (id) => {
+    axios.delete(`/persons/${id}`).then((res) => console.log(res.data));
     this.setState({
-      list: this.state.list.filter((details, i) => i != id),
+      users: this.state.users.filter((details) => details._id != id),
     });
+    console.log(this.state.users);
   };
 
   edit = (e) => {
     this.setState({
+      modalShow: true,
       currentid: e.target.id,
       data: {
-        firstname: this.state.list[e.target.id].firstname,
-        lastname: this.state.list[e.target.id].lastname,
-        age: this.state.list[e.target.id].age,
-        gender: this.state.list[e.target.id].gender,
+        firstName: this.state.users[e.target.value].firstName,
+        lastName: this.state.users[e.target.value].lastName,
+        age: this.state.users[e.target.value].age,
+        gender: this.state.users[e.target.value].gender,
       },
     });
+    console.log(e.target.id);
   };
 
   validate = () => {
     this.setState({
       errors: {
-        firstname: this.state.data.firstname == "",
-        lastname: this.state.data.lastname == "",
+        firstName: this.state.data.firstName == "",
+        lastName: this.state.data.lastName == "",
         age: this.state.data.age == "",
         gender: this.state.data.gender == "",
       },
     });
     return (
-      this.state.data.firstname != "" &&
-      this.state.data.lastname != "" &&
+      this.state.data.firstName != "" &&
+      this.state.data.lastName != "" &&
       this.state.data.age != "" &&
       this.state.data.gender != ""
     );
+  };
+
+  pushData = () => {
+    axios.post("/persons", this.state.data).then((res) => {
+      console.log(this.state.data);
+    });
+    this.getusers();
   };
 
   click = (e) => {
@@ -87,23 +123,31 @@ export class Register extends Component {
 
     if (this.validate()) {
       if (this.state.currentid == "") {
-        this.setState({ list: [...this.state.list, this.state.data] });
+        this.pushData();
+        this.setState({ users: [...this.state.users, this.state.data] });
 
         this.setState({
-          data: { firstname: "", lastname: "", age: "", gender: "" },
+          data: { firstName: "", lastName: "", age: "", gender: "" },
+          modalShow: false,
         });
       } else {
-        const newlist = this.state.list.map((person, i) => {
-          if (i == this.state.currentid) {
-            return this.state.data;
-          } else {
-            return person;
-          }
-        });
+        axios
+          .patch(`/persons/${this.state.currentid}`, this.state.data)
+          .then((res) => {
+            // const newlist = this.state.users.map((person, i) => {
+            //   if (i == this.state.currentid) {
+            //     return res.data;
+            //   } else {
+            //     return person;
+            //   }
+            // });
+          });
+        this.getusers();
         this.setState({
-          list: newlist,
+          // data: newlist,
           currentid: "",
-          data: { firstname: "", lastname: "", age: "", gender: "" },
+          data: { firstName: "", lastName: "", age: "", gender: "" },
+          modalShow: false,
         });
       }
     }
@@ -114,14 +158,18 @@ export class Register extends Component {
       <div>
         <Form
           click={this.click}
-          firstname={this.firstname}
-          lastname={this.lastname}
+          firstName={this.firstName}
+          lastName={this.lastName}
           age={this.age}
           gender={this.gender}
           data={this.state.data}
           errors={this.state.errors}
+          close={this.close}
+          open={this.open}
+          addDetails={this.addDetails}
+          modalShow={this.state.modalShow}
         />
-        <Table list={this.state.list} delete={this.delete} edit={this.edit} />
+        <Table users={this.state.users} delete={this.delete} edit={this.edit} />
       </div>
     );
   }

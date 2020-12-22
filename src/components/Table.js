@@ -24,23 +24,32 @@ const Table = (props) => {
           </tr>
         </thead>
         <tbody>
-          {props.list.map((v, i) => (
+          {props.users.map((v, i) => (
             <tr key={i}>
               <td>
                 {i + 1}
                 {"."}
               </td>
-              <td>{v.firstname}</td>
-              <td>{v.lastname}</td>
+              <td>{v.firstName}</td>
+              <td>{v.lastName}</td>
               <td>{v.age}</td>
               <td>{v.gender}</td>
               <td>
-                <button id={i} onClick={props.edit} className="btn btn-danger">
+                <button
+                  id={v._id}
+                  value={i}
+                  onClick={props.edit}
+                  className="btn btn-danger"
+                >
                   Edit
                 </button>
               </td>
               <td>
-                <button id={i} onClick={onDelete} className="btn btn-danger">
+                <button
+                  id={v._id}
+                  onClick={onDelete}
+                  className="btn btn-danger"
+                >
                   Delete
                 </button>
               </td>
