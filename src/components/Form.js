@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal } from "react-bootstrap";
+import { Modal, InputGroup, FormControl } from "react-bootstrap";
 
 export class Form extends Component {
   // addDetails = () => {
@@ -8,11 +8,43 @@ export class Form extends Component {
   render() {
     return (
       <div className="container gap">
-        <button onClick={this.props.open} className="btn btn-primary">
-          Add Details
-        </button>
+        <div className="App">
+          <br />
+          <button onClick={this.props.open} className="btn btn-primary">
+            Add Details
+          </button>
+        </div>
+        <br />
+
+        {/* <div>
+          
+          <input
+            value={this.props.search}
+            onChange={this.props.onSearch}
+            type="text"
+            placeholder="Search.."
+            name="search"
+          />
+
+          {/* <button type="submit">search</button> */}
+        {/* </div> */}
         <div>
-          <input type="search" placeholder="search...." />
+          <InputGroup className="mb-3">
+            <InputGroup.Prepend>
+              <InputGroup.Text id="inputGroup-sizing-default">
+                UsersList
+              </InputGroup.Text>
+            </InputGroup.Prepend>
+            <FormControl
+              value={this.props.search}
+              onChange={this.props.onSearch}
+              type="text"
+              placeholder="Search.."
+              name="search"
+              aria-label="Default"
+              aria-describedby="inputGroup-sizing-default"
+            />
+          </InputGroup>
         </div>
 
         <Modal show={this.props.modalShow} onHide={this.props.close}>
@@ -31,7 +63,7 @@ export class Form extends Component {
                     onChange={this.props.firstName}
                     type="text"
                     value={this.props.data.firstName}
-                    class="form-control"
+                    className="form-control"
                   />
                   <p className="error">
                     {this.props.errors.firstName

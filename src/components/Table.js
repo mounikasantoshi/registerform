@@ -9,22 +9,40 @@ const Table = (props) => {
   //   props.update(e.target.id);
   // };
 
+  const { search, users } = props;
+  const filteredUsers = users.filter((user) => {
+    return (
+      user.firstName.toLowerCase().includes(search.toLowerCase()) ||
+      user.lastName.toLowerCase().includes(search.toLowerCase()) ||
+      user.age.toLowerCase().includes(search.toLowerCase()) ||
+      user.gender.toLowerCase().includes(search.toLowerCase())
+    );
+  });
+
   return (
     <div className="container">
       <table className="table table-striped table-bordered table-hover">
         <thead className="table-head">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Age</th>
-            <th scope="col">Gender</th>
+            <th onClick={() => props.userSort("firstName")} scope="col">
+              First Name
+            </th>
+            <th onClick={() => props.userSort("lastName")} scope="col">
+              Last Name
+            </th>
+            <th onClick={() => props.userSort("age")} scope="col">
+              Age
+            </th>
+            <th onClick={() => props.userSort("gender")} scope="col">
+              Gender
+            </th>
             <th scope="col">Update</th>
             <th scope="col">Delete</th>
           </tr>
         </thead>
         <tbody>
-          {props.users.map((v, i) => (
+          {filteredUsers.map((v, i) => (
             <tr key={i}>
               <td>
                 {i + 1}

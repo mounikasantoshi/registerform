@@ -20,6 +20,8 @@ export class Register extends Component {
 
     errors: { firstName: "", lastName: "", age: "", gender: "" },
     modalShow: false,
+    search: "",
+    direction: { firstName: "asc", lastName: "asc", age: "asc", gender: "asc" },
   };
   getusers = () => {
     axios.get("/persons").then((res) => {
@@ -58,6 +60,12 @@ export class Register extends Component {
     });
   };
 
+  onSearch = (e) => {
+    this.setState({
+      search: e.target.value,
+    });
+  };
+
   age = (e) => {
     this.setState({
       data: { ...this.state.data, age: e.target.value },
@@ -92,6 +100,20 @@ export class Register extends Component {
       },
     });
     console.log(e.target.id);
+  };
+
+  userSort = (name) => {
+    const users = this.state.users;
+    this.setState({
+      users: users.sort((a, b) =>
+        this.state.direction[name] === "asc"
+          ? a[name] < b[name] && -1
+          : a[name] > b[name] && -1
+      ),
+      direction: {
+        [name]: this.state.direction[name] === "asc" ? "dec" : "asc",
+      },
+    });
   };
 
   validate = () => {
@@ -168,8 +190,16 @@ export class Register extends Component {
           open={this.open}
           addDetails={this.addDetails}
           modalShow={this.state.modalShow}
+          onSearch={this.onSearch}
+          search={this.state.search}
         />
-        <Table users={this.state.users} delete={this.delete} edit={this.edit} />
+        <Table
+          users={this.state.users}
+          delete={this.delete}
+          edit={this.edit}
+          userSort={this.userSort}
+          search={this.state.search}
+        />
       </div>
     );
   }
