@@ -25,9 +25,14 @@ const Table = (props) => {
 
   return (
     <div className="container App">
-      <table className="table table-striped table-bordered table-hover">
+      <table
+        className="table table-striped table-bordered table-hover"
+        // style={{ height: "300px" }}
+      >
         <thead className="table-head">
-          <tr>
+          <tr
+          // style={{ height: `300px / ${props.usersPerPage}` }}
+          >
             <th scope="col">#</th>
             <th onClick={() => props.userSort("firstName")} scope="col">
               First Name
@@ -51,7 +56,7 @@ const Table = (props) => {
         </thead>
         <tbody>
           {currentUsers.map((v, i) => (
-            <tr key={i}>
+            <tr key={v._id}>
               <td>
                 {i + 1}
                 {"."}
@@ -67,7 +72,13 @@ const Table = (props) => {
                   onClick={props.edit}
                   className="btn btn-primary"
                 >
-                  <i class="fas fa-user-edit"></i>Edit
+                  <i
+                    onClick={props.edit}
+                    id={v._id}
+                    value={i}
+                    class="fas fa-user-edit"
+                  ></i>
+                  Edit
                 </button>
               </td>
               <td>
@@ -83,7 +94,8 @@ const Table = (props) => {
           ))}
         </tbody>
       </table>
-      <div className="d-flex justify-content-center container">
+      <br />
+      <div className="d-flex justify-content-center container ">
         <Button
           variant="link"
           disabled={currentPage === 1 ? true : false}

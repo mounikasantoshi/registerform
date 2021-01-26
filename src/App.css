@@ -23,6 +23,10 @@
   height: 40vh;
 }
 
+/* tr{
+
+} */
+
 .App-link {
   color: #61dafb;
 }
@@ -36,6 +40,11 @@
   border: none;
   background: none;
 }
+
+/* .fixPagination {
+  position: relative;
+  bottom: 10px;
+} */
 
 /* .fas {
   margin-right: 1ch;
@@ -95,7 +104,13 @@
   /* .mb-3 {
     width: 10px;
   } */
-  .media {
-    width: ;
+}
+
+@media (max-width: 445px) {
+  .fa-trash-alt {
+    display: none;
+  }
+  .fas {
+    display: none;
   }
 }

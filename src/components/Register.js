@@ -38,7 +38,11 @@ export class Register extends Component {
   }
 
   close = () => {
-    this.setState({ modalShow: false });
+    this.setState({
+      modalShow: false,
+      data: { firstName: "", lastName: "", age: "", gender: "" },
+      currentid: "",
+    });
   };
 
   open = () => {
@@ -70,7 +74,11 @@ export class Register extends Component {
   };
 
   onUsersPerPage = () => {
-    this.setState({ usersPerPage: this.state.count, count: "" });
+    this.setState({
+      usersPerPage: this.state.count,
+      count: "",
+      currentPage: 1,
+    });
   };
 
   onCount = (e) => {
@@ -111,10 +119,13 @@ export class Register extends Component {
       modalShow: true,
       currentid: e.target.id,
       data: {
-        firstName: this.state.users[e.target.value].firstName,
-        lastName: this.state.users[e.target.value].lastName,
-        age: this.state.users[e.target.value].age,
-        gender: this.state.users[e.target.value].gender,
+        firstName: this.state.users.find((user) => user._id === e.target.id)
+          .firstName,
+        lastName: this.state.users.find((user) => user._id === e.target.id)
+          .lastName,
+        age: this.state.users.find((user) => user._id === e.target.id).age,
+        gender: this.state.users.find((user) => user._id === e.target.id)
+          .gender,
       },
     });
     console.log(e.target.id);
