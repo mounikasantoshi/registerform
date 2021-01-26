@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, InputGroup, FormControl } from "react-bootstrap";
+import { Modal, InputGroup, FormControl, Button } from "react-bootstrap";
 
 export class Form extends Component {
   // addDetails = () => {
@@ -11,6 +11,7 @@ export class Form extends Component {
         <div className="App">
           <br />
           <button onClick={this.props.open} className="btn btn-primary">
+            <i class="fas fa-user-plus pr-2 "></i>
             Add Details
           </button>
         </div>
@@ -28,23 +29,64 @@ export class Form extends Component {
 
           {/* <button type="submit">search</button> */}
         {/* </div> */}
-        <div>
-          <InputGroup className="mb-3">
-            <InputGroup.Prepend>
-              <InputGroup.Text id="inputGroup-sizing-default">
-                UsersList
-              </InputGroup.Text>
-            </InputGroup.Prepend>
-            <FormControl
-              value={this.props.search}
-              onChange={this.props.onSearch}
-              type="text"
-              placeholder="Search.."
-              name="search"
-              aria-label="Default"
-              aria-describedby="inputGroup-sizing-default"
-            />
-          </InputGroup>
+        <div className="flex">
+          <form className="flex">
+            <div className="row">
+              <div className="col-md-7">
+                <InputGroup className="mb-3">
+                  <InputGroup.Prepend>
+                    <InputGroup.Text id="inputGroup-sizing-default">
+                      UsersList
+                    </InputGroup.Text>
+                  </InputGroup.Prepend>
+                  <FormControl
+                    value={this.props.search}
+                    onChange={this.props.onSearch}
+                    type="text"
+                    placeholder="Search here..."
+                    name="search"
+                    aria-label="Default"
+                    // aria-describedby="inputGroup-sizing-default"
+                  />
+                </InputGroup>
+              </div>
+              <div className="col-md-5">
+                <InputGroup className="mb-3">
+                  <InputGroup.Prepend>
+                    <InputGroup.Text id="inputGroup-sizing-default">
+                      Users Per Page
+                    </InputGroup.Text>
+                  </InputGroup.Prepend>
+                  <select onChange={this.props.onCount} class="form-control">
+                    <option value="3">3</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                  </select>
+                  {/* <FormControl
+                    value=
+                    // value="3"
+                    onChange={this.props.onCount}
+                    min="1"
+                    max="5"
+                    type="number"
+                    placeholder="default:3 | range(1-50)"
+                    name="search"
+                    aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default"
+                  /> */}
+                  <Button
+                    onClick={this.props.onUsersPerPage}
+                    value={this.props.count}
+                  >
+                    Submit
+                  </Button>
+                </InputGroup>
+              </div>
+            </div>
+          </form>
         </div>
 
         <Modal show={this.props.modalShow} onHide={this.props.close}>
@@ -56,14 +98,14 @@ export class Form extends Component {
           </Modal.Header>
           <Modal.Body>
             <form onSubmit={this.props.click}>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">First name</label>
-                <div class="col-sm-10">
+              <div class="form-group row ">
+                <label class="col-sm-3 col-form-label">First name</label>
+                <div class="col-sm-9">
                   <input
                     onChange={this.props.firstName}
                     type="text"
                     value={this.props.data.firstName}
-                    className="form-control"
+                    className="form-control media"
                   />
                   <p className="error">
                     {this.props.errors.firstName
@@ -74,8 +116,8 @@ export class Form extends Component {
               </div>
 
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">lastName</label>
-                <div class="col-sm-10">
+                <label class="col-sm-3 col-form-label">Last Name</label>
+                <div class="col-sm-9">
                   <input
                     onChange={this.props.lastName}
                     value={this.props.data.lastName}
@@ -91,8 +133,8 @@ export class Form extends Component {
               </div>
 
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">age</label>
-                <div class="col-sm-10">
+                <label class="col-sm-3 col-form-label">Age</label>
+                <div class="col-sm-9">
                   <input
                     onChange={this.props.age}
                     type="number"
@@ -107,7 +149,7 @@ export class Form extends Component {
 
               <fieldset class="form-group">
                 <div class="row">
-                  <legend class="col-form-label col-sm-2 pt-0">gender</legend>
+                  <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
                   <div class="col-sm-10">
                     <div class="form-check">
                       <input
@@ -117,7 +159,7 @@ export class Form extends Component {
                         name="gridRadios"
                         id="gridRadios1"
                         value="female"
-                        checked={this.props.data.gender == "female"}
+                        checked={this.props.data.gender === "female"}
                       />
                       <label class="form-check-label" for="gridRadios1">
                         female
@@ -132,7 +174,7 @@ export class Form extends Component {
                         name="gridRadios"
                         id="gridRadios2"
                         value="male"
-                        checked={this.props.data.gender == "male"}
+                        checked={this.props.data.gender === "male"}
                       />
                       <label class="form-check-label" for="gridRadios2">
                         male

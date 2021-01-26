@@ -2,16 +2,6 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 .head {
   background-color: #007bff;
 }
@@ -29,15 +19,83 @@
   color: white;
 }
 
+.table {
+  height: 40vh;
+}
+
 .App-link {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
+.active {
+  color: white;
+  background: #007bff;
+}
+
+.btn-none {
+  border: none;
+  background: none;
+}
+
+/* .fas {
+  margin-right: 1ch;
+} */
+
+/* @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
+  }
+} */
+
+/* //Responsive */
+@media (max-width: 500px) {
+  .flex {
+    display: flex;
+  }
+  /* .page-link {
+    height: 1px;
+    width: 1px;
+    font: 1px;
+  }
+
+  .btn-link {
+    font: 20px;
+    height: 1px;
+    width: 1px;
+  } */
+
+  /* .d-flex {
+    height: 1px;
+  } */
+
+  /* .modal {
+    background: rgb(247, 119, 119);
+  } */
+
+  body {
+    background: rgb(199, 198, 198);
+    font-size: 1ch;
+  }
+  .fa-trash-alt {
+    height: 8;
+    width: 10;
+  }
+  .fas {
+    margin-right: 1ch;
+  }
+  .btn {
+    font-size: 8px;
+  }
+  .table {
+    height: 20vh;
+  }
+  /* .mb-3 {
+    width: 10px;
+  } */
+  .media {
+    width: ;
   }
 }
