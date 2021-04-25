@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import Form from "./Form";
 import Table from "./Table";
 import axios from "axios";
+import { connect } from "react-redux";
+import personsList from "./redux/reducers/PersonsList";
+import { getUsers } from "./redux/actions/persons";
 
 export class Register extends Component {
   state = {
@@ -14,7 +17,7 @@ export class Register extends Component {
     //   //   gender: "female",
     //   // },
     // ],
-    users: [],
+    // users: [],
     data: { firstName: "", lastName: "", age: "", gender: "" },
     currentid: "",
 
@@ -26,15 +29,15 @@ export class Register extends Component {
     currentPage: 1,
     direction: { firstName: "asc", lastName: "asc", age: "asc", gender: "asc" },
   };
-  getusers = () => {
-    axios.get("/persons").then((res) => {
-      this.setState({ users: res.data });
-      // console.log(this.state.users);
-    });
-  };
+  // getusers = () => {
+  //   axios.get("/persons").then((res) => {
+  //     this.setState({ users: res.data });
+  //     // console.log(this.state.users);
+  //   });
+  // };
 
   componentDidMount() {
-    this.getusers();
+    this.props.getUsers();
   }
 
   close = () => {
@@ -231,7 +234,9 @@ export class Register extends Component {
   };
 
   render() {
-    const { search, users, usersPerPage, currentPage } = this.state;
+    console.log(this.props.users);
+    const { search, usersPerPage, currentPage } = this.state;
+    const { users } = this.props;
     const filteredUsers = users.filter((user) => {
       return (
         user.firstName.toLowerCase().includes(search.toLowerCase()) ||
@@ -305,4 +310,9 @@ export class Register extends Component {
   }
 }
 
-export default Register;
+const mapStateToProps = (state) => ({
+  // personsList: state.personsList;
+  users: state.personList.users,
+});
+
+export default connect(mapStateToProps, { getUsers })(Register);

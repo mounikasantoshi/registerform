@@ -1,0 +1,3 @@
+export const LOAD_PERSONS = "LOAD_PERSONS";
+export const UPDATE_LIST_ITEM = "UPDATE_LIST_ITEM";
+export const DELETE_LIST_ITEM = "DELETE_LIST_ITEM";
